@@ -3,6 +3,8 @@ let todos = [];
 // DOMs
 const $todos = document.querySelector('.todos');
 const $input = document.querySelector('.input-todo');
+const $completeAll = document.querySelector('.checkbox');
+const $removeAll = document.querySelector('.btn');
 
 // render
 const render = () => {
@@ -19,6 +21,9 @@ const render = () => {
   })
 
   $todos.innerHTML = html;
+
+  document.querySelector('.completed-todos').innerHTML = todos.filter(todo => todo.completed).length;
+  document.querySelector('.active-todos').innerHTML = todos.filter(todo => !todo.completed).length;
 };
 
 const getTodos = () => {
@@ -51,7 +56,21 @@ const removeTodo = (id) => {
   render();
 };
 
+const completeAll = (completed) => {
+  todos = todos.map(todo => ({...todo, completed: completed}));
+
+  render();
+};
+
+const removeAll = () => {
+  todos = todos.filter(todo => !todo.completed);
+
+  render();
+};
+
 // Events
+window.onload = getTodos;
+
 $input.onkeyup = ({target, keyCode}) => {
   const content = target.value.trim();
   if(keyCode !== 13 || content === '') return;
@@ -71,4 +90,11 @@ $todos.onclick = ({target}) => {
   removeTodo(id);
 };
 
-window.onload = getTodos;
+$completeAll.onchange = ({target}) => {
+  const completed = target.checked;
+  completeAll(completed);
+};
+
+$removeAll.onclick = ({target}) => {
+  removeAll();
+};
