@@ -1,16 +1,18 @@
 let todos = [];
-
+let navState = 'all';
 // DOMs
 const $todos = document.querySelector('.todos');
 const $input = document.querySelector('.input-todo');
 const $completeAll = document.querySelector('.checkbox');
 const $removeAll = document.querySelector('.btn');
+const $nav = document.querySelector('.nav');
 
 // render
 const render = () => {
+  const _todos = todos.filter(todo => navState === 'all' ? true : navState === 'active' ? !todo.completed : todo.completed);
   let html = '';
 
-  todos.forEach(({ id, content, completed }) => {
+  _todos.forEach(({ id, content, completed }) => {
     html += `
       <li id="${id}" class="todo-item">
         <input class="checkbox" type="checkbox" id="ck-${id}" ${completed ? 'checked' : ''}>
@@ -22,8 +24,8 @@ const render = () => {
 
   $todos.innerHTML = html;
 
-  document.querySelector('.completed-todos').innerHTML = todos.filter(todo => todo.completed).length;
-  document.querySelector('.active-todos').innerHTML = todos.filter(todo => !todo.completed).length;
+  document.querySelector('.completed-todos').innerHTML = _todos.filter(todo => todo.completed).length;
+  document.querySelector('.active-todos').innerHTML = _todos.filter(todo => !todo.completed).length;
 };
 
 const getTodos = () => {
@@ -68,6 +70,14 @@ const removeAll = () => {
   render();
 };
 
+const changeNav = (id) => {
+  [...$nav.children].forEach($navItem => {
+    $navItem.classList.toggle('active', $navItem.id === id);
+  });
+  navState = id;
+  render();
+}
+
 // Events
 window.onload = getTodos;
 
@@ -97,4 +107,9 @@ $completeAll.onchange = ({target}) => {
 
 $removeAll.onclick = ({target}) => {
   removeAll();
+};
+
+$nav.onclick = ({target}) => {
+  if(target.classList.contains('nav')) return;
+  changeNav(target.id);
 };
