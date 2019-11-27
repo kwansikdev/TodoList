@@ -4,7 +4,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json()); // for parsing application/json
 
-let todos = [
+let gtodos = [
   { id: 1, content: 'HTML', completed: false },
   { id: 2, content: 'CSS', completed: true },
   { id: 3, content: 'Javascript', completed: false }
