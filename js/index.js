@@ -8,7 +8,8 @@ const $removeAll = document.querySelector('.btn');
 const $nav = document.querySelector('.nav');
 
 // render
-const render = () => {
+const render = (data) => {
+  todos = data;
   const _todos = todos.filter(todo => navState === 'all' ? true : navState === 'active' ? !todo.completed : todo.completed);
   let html = '';
 
@@ -28,15 +29,25 @@ const render = () => {
   document.querySelector('.active-todos').innerHTML = _todos.filter(todo => !todo.completed).length;
 };
 
-const getTodos = () => {
-  todos = [
-    { id: 1, content: 'HTML', completed: false },
-    { id: 2, content: 'CSS', completed: true },
-    { id: 3, content: 'Javascript', completed: false }
-  ];
-  todos.sort((todo1, todo2) => todo2.id - todo1.id);
 
-  render()
+
+const getTodos = () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('get', '/todos');
+  xhr.send();
+
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+    if(xhr.status === 200) {
+      // reslove(JSON.parse(xhr.response));
+      console.log(JSON.parse(xhr.response));
+    } else {
+      console.log(new Error(xhr.status));
+      // reject(new Error(xhr.status));
+    }
+  };
+
+  // render(JSON.parse(xhr.response))
 };
 
 const generateId = () => !todos.length ? 1 : Math.max(...todos.map(todo => todo.id)) + 1;
