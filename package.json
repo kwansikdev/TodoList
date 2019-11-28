@@ -1,30 +1,15 @@
 {
-  "name": "TodoList",
-  "version": "1.0.0",
-  "description": "TodoList",
+  "name": "todos",
+  "version": "3.0.0",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kwansikdev/TodoList.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/kwansikdev/TodoList/issues"
-  },
-  "homepage": "https://github.com/kwansikdev/TodoList#readme",
-  "devDependencies": {
-    "eslint": "^6.7.1",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-html": "^6.0.0",
-    "eslint-plugin-import": "^2.18.2"
-  },
   "dependencies": {
-    "express": "^4.17.1",
-    "nodemon": "^2.0.1"
+    "express": "^4.17.1"
   }
 }
