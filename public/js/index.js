@@ -1,5 +1,6 @@
 let todos = [];
 let navState = 'all';
+
 // DOMs
 const $todos = document.querySelector('.todos');
 const $input = document.querySelector('.input-todo');
@@ -29,25 +30,23 @@ const render = (data) => {
   document.querySelector('.active-todos').innerHTML = _todos.filter(todo => !todo.completed).length;
 };
 
-
-
-const getTodos = () => {
+const get = (url, fn) => {
   const xhr = new XMLHttpRequest();
-  xhr.open('get', '/todos');
+  xhr.open('GET', url);
   xhr.send();
-
   xhr.onreadystatechange = () => {
     if (xhr.readyState !== XMLHttpRequest.DONE) return;
-    if(xhr.status === 200) {
-      // reslove(JSON.parse(xhr.response));
-      console.log(JSON.parse(xhr.response));
+    if (xhr.status === 200 || xhr.status === 201) {
+      fn(JSON.parse(xhr.response));
     } else {
-      console.log(new Error(xhr.status));
+      console.error('error', xhr.status, xhr.statusText);
       // reject(new Error(xhr.status));
     }
-  };
+  }
+};
 
-  // render(JSON.parse(xhr.response))
+const getTodos = () => {
+  get(`/todos`, render);
 };
 
 const generateId = () => !todos.length ? 1 : Math.max(...todos.map(todo => todo.id)) + 1;
@@ -90,7 +89,9 @@ const changeNav = (id) => {
 }
 
 // Events
-window.onload = getTodos;
+window.onload = () => {
+  getTodos();
+};
 
 $input.onkeyup = ({target, keyCode}) => {
   const content = target.value.trim();
