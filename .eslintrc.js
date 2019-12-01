@@ -22,7 +22,7 @@ module.exports = {
     'no-plusplus': 'off',
     // "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "prefer-arrow-callback": [ "error", { "allowNamedFunctions": false } ],
-    "func-names": ["error", "naver"],
+    // "func-names": ["error", "off"],
     "comma-dangle": [ "error", "never"],
     "no-console": "off"
   }
