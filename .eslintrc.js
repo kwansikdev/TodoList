@@ -24,6 +24,11 @@ module.exports = {
     "prefer-arrow-callback": [ "error", { "allowNamedFunctions": false } ],
     // "func-names": ["error", "off"],
     "comma-dangle": [ "error", "never"],
-    "no-console": "off"
+    "no-console": "off",
+    "arrow-parens": ["error", "as-needed"],
+    "object-curly-spacing": ["error", "always"],
+    "no-nested-ternary": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off"
   }
 };
